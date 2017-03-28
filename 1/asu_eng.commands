@@ -4,57 +4,55 @@
 !set computer.name := 'Computer and Systems'
 !set communic.name := 'Communications and Electronics'
 
-!create dr1 : Doctor
-!create dr2 : Doctor
-!create dr3 : Doctor
+!create dr_cse1 : Doctor
+!create dr_cse2 : Doctor
+!create dr_comm : Doctor
 
-!set dr1.name := 'Dr. 1'
-!set dr2.name := 'Dr. 2'
-!set dr3.name := 'Dr. 3'
+!set dr_cse1.name := 'Dr. CSE 1'
+!set dr_cse2.name := 'Dr. CSE 2'
+!set dr_comm.name := 'Dr. Communications'
 
-!create ahmed 	: PostGradStudent
-!create mohamed : PostGradStudent
-!create ali 	: PostGradStudent
-!create hassan 	: PostGradStudent
+!set dr_cse1.birthdate := '1962-07-01'
+!set dr_cse2.birthdate := '1972-01-01'
+!set dr_comm.birthdate := '1976-11-24'
 
-!set ahmed.name := 'Ahmed'
-!set mohamed.name := 'Mohamed'
+!create ahm	: PostGradStudent
+!create moh : PostGradStudent
+!create ali	: PostGradStudent
+
+!set ahm.name := 'Ahmed'
+!set moh.name := 'Mohamed'
 !set ali.name := 'Ali'
-!set hassan.name := 'Hassan'
 
-!create res1 : Research
-!create res2 : Research
-!create res3 : Research
-!create res4 : Research
+!set ahm.birthdate := '1982-03-01'
+!set moh.birthdate := '1987-07-28'
+!set ali.birthdate := '1970-11-24'
 
-!set res1.title := 'Title 1'
-!set res2.title := 'Title 2'
-!set res3.title := ''
-!set res4.title := 'Title 1'
+!create res_cse1 : Research
+!create res_cse2 : Research
+!create res_comm : Research
 
-!insert (dr1,computer) into worksAt
-!insert (dr2,computer) into worksAt
-!insert (dr3,communic) into worksAt
+!set res_cse1.title := 'CSE Research Title 1'
+!set res_cse2.title := 'CSE Research Title 2'
+!set res_comm.title := 'Commu Research Title'
 
-!insert (res1, ahmed) into doneBy
-!insert (res2, mohamed) into doneBy
-!insert (res3, ali) into doneBy
-!insert (res4, hassan) into doneBy
+!insert (dr_cse1, computer) into worksAt
+!insert (dr_cse2, computer) into worksAt
+!insert (dr_comm, communic) into worksAt
 
-!insert (res1,computer) into at
-!insert (res2,computer) into at
-!insert (res3,communic) into at
-!insert (res4,communic) into at
+!insert (res_cse1, ahm) into doneBy
+!insert (res_cse2, moh) into doneBy
+!insert (res_comm, ali) into doneBy
 
-!insert (res1, dr1) into supervisedBy
-!insert (res1, dr3) into supervisedBy
+!insert (res_cse1,computer) into at
+!insert (res_cse2,computer) into at
+!insert (res_comm,communic) into at
 
-!insert (res2, dr1) into supervisedBy
-!insert (res2, dr2) into supervisedBy
+!insert (res_cse1, dr_cse1) into supervisedBy
+!insert (res_cse1, dr_comm) into supervisedBy
 
-!insert (res3, dr1) into supervisedBy
-!insert (res3, dr2) into supervisedBy
+!insert (res_cse2, dr_cse1) into supervisedBy
+!insert (res_cse2, dr_cse2) into supervisedBy
 
-!insert (res4, dr2) into supervisedBy
-!insert (res4, dr3) into supervisedBy
-
+!insert (res_comm, dr_cse1) into supervisedBy
+!insert (res_comm, dr_cse2) into supervisedBy
