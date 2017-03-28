@@ -53,24 +53,43 @@ end
 constraints
 
 context Person
+
+-- Person name should always be set. Checking using string size
 inv name_not_null: name.size > 0
 
+--------------------------------------------------------------------
 context Department
+
+-- Verify department name not reused using implies
 inv no_same_dept_name: Department.allInstances()->forAll(other | self <> other implies other.name <> self.name)
+
+-- Department name should always be set. Here checking using another method using oclIsUndefined() = false
 inv dept_name_not_null: self.name.oclIsUndefined() = false
-
+--------------------------------------------------------------------
 context Doctor
+
+-- Verifying that doctor names are unique using another method to demonstrate and memorize usage of isUnique()
 inv no_same_dr_name: Doctor.allInstances()->isUnique(name)
+
+-- Doctor loyality: If the doctor supervises more than one research, then at least one of these researches is at his department
 inv dr_loyality: research->size > 0 implies research.department->includes(self.department)
-
-
+--------------------------------------------------------------------
 context PostGradStudent
-inv no_same_student_name: PostGradStudent.allInstances()->forAll(other | self <> other implies other.name <> self.name)
 
+-- Verifying student name not reused using implies as done in Department
+inv no_same_student_name: PostGradStudent.allInstances()->forAll(other | self <> other implies other.name <> self.name)
+--------------------------------------------------------------------
 context Research
+
+-- Verifying Research title not reused using implies as done in Department and PostGradStudent but inverted
 inv no_same_research_title: Research.allInstances()->forAll(other | self.title = other.title implies other = self)
+
+-- There should be at least one doctor from the department where the research is done
 inv dr_from_dept: self.doctor->exists(d | d.department = self.department)
+
+-- The doctor should be older than the postgraduate student. May be in it is the case in some university in some country?
 inv dr_older_than_student: self.doctor.birthdate->forAll(bd | bd < self.postGradStudent.birthdate)
+--------------------------------------------------------------------
 
 
 

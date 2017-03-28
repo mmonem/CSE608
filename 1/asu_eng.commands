@@ -13,7 +13,7 @@
 !set dr_comm.name := 'Dr. Communications'
 
 !set dr_cse1.birthdate := '1962-07-01'
-!set dr_cse2.birthdate := '1972-01-01'
+!set dr_cse2.birthdate := '1984-01-01'
 !set dr_comm.birthdate := '1976-11-24'
 
 !create ahm	: PostGradStudent
@@ -24,8 +24,9 @@
 !set moh.name := 'Mohamed'
 !set ali.name := 'Ali'
 
-!set ahm.birthdate := '1982-03-01'
+!set ahm.birthdate := '1985-03-01'
 !set moh.birthdate := '1987-07-28'
+-- violating dr_older_than_student rule. Ali is older than dr_cse2
 !set ali.birthdate := '1970-11-24'
 
 !create res_cse1 : Research
@@ -49,10 +50,12 @@
 !insert (res_comm,communic) into at
 
 !insert (res_cse1, dr_cse1) into supervisedBy
+-- violating dr_loyality rule. dr_comm should have a research in communication department
 !insert (res_cse1, dr_comm) into supervisedBy
 
 !insert (res_cse2, dr_cse1) into supervisedBy
 !insert (res_cse2, dr_cse2) into supervisedBy
 
 !insert (res_comm, dr_cse1) into supervisedBy
+-- violating dr_from_dept rule. res_comm should have at least one doctor from communicsations department
 !insert (res_comm, dr_cse2) into supervisedBy
