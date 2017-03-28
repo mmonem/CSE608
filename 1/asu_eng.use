@@ -1,0 +1,78 @@
+model ASU_ENG
+ 
+-- classes
+ 
+class Person
+attributes
+  name : String
+  birthdate: String
+end
+
+class Doctor < Person
+end
+
+class PostGradStudent < Person
+attributes
+end
+ 
+class Department
+attributes
+  name : String
+end
+ 
+class Research
+attributes
+  title: String
+  start: String
+end
+ 
+-- associations
+ 
+association worksAt between
+  Doctor[*]
+  Department[1]
+end
+ 
+association doneBy between
+  Research[1]
+  PostGradStudent[1]
+end
+ 
+association supervisedBy between
+  Research[*]
+  Doctor[2..3]
+end
+ 
+association at between
+  Research[*]
+  Department[1]
+end
+
+-- constraints
+
+constraints
+
+context Person
+inv name_not_null: Person.allInstances()->forAll(p | p.name.size > 0)
+
+context Department
+inv no_same_dept_name: Department.allInstances()->forAll(d1,d2 | d1 <> d2 implies d1.name <> d2.name)
+inv dept_name_not_null: Department.allInstances()->forAll(d | d.name.oclIsUndefined() = false)
+
+context Doctor
+inv no_same_dr_name: Doctor.allInstances()->isUnique(name)
+
+context PostGradStudent
+inv no_same_student_name: PostGradStudent.allInstances()->forAll(s1,s2 | s1 <> s2 implies s1.name <> s2.name)
+
+context Research
+inv no_same_research_title: Research.allInstances()->forAll(r1,r2 | r1.title = r2.title implies r1 = r2)
+--inv dr_from_dept: Research.allInstances()->forAll(r | r.supervisedBy->exists(d | d.worksAt = r.at))
+--inv dr_older_than_student: Research.allInstances()->forAll(r | r.supervisedBy.birthdate->forAll(bd | bd < r.doneBy.biethdate))
+
+
+
+
+
+
+

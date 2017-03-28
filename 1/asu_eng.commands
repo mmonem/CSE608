@@ -1,0 +1,60 @@
+!create computer : Department
+!create communic : Department
+
+!set computer.name := 'Computer and Systems'
+!set communic.name := 'Communications and Electronics'
+
+!create dr1 : Doctor
+!create dr2 : Doctor
+!create dr3 : Doctor
+
+!set dr1.name := 'Dr. 1'
+!set dr2.name := 'Dr. 2'
+!set dr3.name := 'Dr. 3'
+
+!create ahmed 	: PostGradStudent
+!create mohamed : PostGradStudent
+!create ali 	: PostGradStudent
+!create hassan 	: PostGradStudent
+
+!set ahmed.name := 'Ahmed'
+!set mohamed.name := 'Mohamed'
+!set ali.name := 'Ali'
+!set hassan.name := 'Hassan'
+
+!create res1 : Research
+!create res2 : Research
+!create res3 : Research
+!create res4 : Research
+
+!set res1.title := 'Title 1'
+!set res2.title := 'Title 2'
+!set res3.title := ''
+!set res4.title := 'Title 1'
+
+!insert (dr1,computer) into worksAt
+!insert (dr2,computer) into worksAt
+!insert (dr3,communic) into worksAt
+
+!insert (res1, ahmed) into doneBy
+!insert (res2, mohamed) into doneBy
+!insert (res3, ali) into doneBy
+!insert (res4, hassan) into doneBy
+
+!insert (res1,computer) into at
+!insert (res2,computer) into at
+!insert (res3,communic) into at
+!insert (res4,communic) into at
+
+!insert (res1, dr1) into supervisedBy
+!insert (res1, dr3) into supervisedBy
+
+!insert (res2, dr1) into supervisedBy
+!insert (res2, dr2) into supervisedBy
+
+!insert (res3, dr1) into supervisedBy
+!insert (res3, dr2) into supervisedBy
+
+!insert (res4, dr2) into supervisedBy
+!insert (res4, dr3) into supervisedBy
+
