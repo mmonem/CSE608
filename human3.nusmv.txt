@@ -1,0 +1,47 @@
+MODULE main
+
+
+VAR
+
+state: {asleep, awake, eating, working};
+event: {none, alarm, tired, gethungery, needmoney};
+time: {early, midday, night};
+
+ASSIGN
+
+
+init(state) := asleep;
+init(time) := early;
+
+
+-- modling transitions of the state transition model
+TRANS
+(state=awake & event=needmoney) -> next(state)= working ;
+
+TRANS
+state=asleep & event=alarm   -> next(state) = awake;  
+
+TRANS
+state = working & event=gethungery -> next(state)= eating;
+
+TRANS
+event=tired -> next(state)= asleep;
+
+--TRANS
+--time=early | event=alarm -> next(state)= awake;
+
+TRANS
+time=early -> next(time)= midday;
+TRANS
+time=midday -> next(time)=night;
+TRANS
+time=night -> next(time)=early;
+
+-- this property means a person 
+-- who feels hungery will never got asleep
+
+SPEC !EF (event=gethungery & AX state=asleep)
+
+SPEC !EF (state=asleep)
+SPEC AG (state = asleep ->  AX (state = working) )
+
