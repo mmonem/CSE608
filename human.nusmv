@@ -30,6 +30,8 @@ event=tired -> next(state)= asleep;
 --TRANS
 --time=early | event=alarm -> next(state)= awake;
 
+
+-- Time state transition
 TRANS
 time=early -> next(time)= midday;
 TRANS
@@ -42,6 +44,12 @@ time=night -> next(time)=early;
 
 SPEC !EF (event=gethungery & AX state=asleep)
 
+-- Can't understand the purpose of this rule.
+-- Does it mean that it will not happen that the human is asleep in the future !!!
 SPEC !EF (state=asleep)
-SPEC AG (state = asleep ->  AX (state = working) )
+
+-- If the human is it always holds that if a human is asleep he
+-- will eventually be working.
+-- Now, the model gives true for this rule
+SPEC AG (state = asleep -> EF (state = working))
 
