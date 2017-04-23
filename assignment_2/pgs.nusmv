@@ -54,3 +54,6 @@ SPEC EF (stage = finished)
 -- The system can't allow the researcher to complete unless he publishes 2 papers
 SPEC AG (AG papers != two -> AG stage = finished)
 
+-- Verify that the luck is not enough for a researcher to get his certificate
+SPEC !EF (effort = sleep & stage = finished)
+
