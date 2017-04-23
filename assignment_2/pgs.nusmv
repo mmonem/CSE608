@@ -1,0 +1,56 @@
+-- Model for a post graduate student in some university other than ASU !!!
+MODULE main
+
+VAR
+
+stage: {qualification, oral, courses, research, finished};
+papers: {none, one, two};
+effort: {sleep, workhard};
+luck: {good, bad};
+
+
+
+
+ASSIGN
+
+init(stage) := qualification;
+init(papers) := none;
+init(effort) := sleep;
+
+next(effort) := {sleep, workhard};
+
+next(stage) :=
+	case
+		-- If Studied hard and is lucky, goto the next stage
+		stage = qualification & effort = workhard & luck = good: oral;
+		
+		-- If Studied hard and is lucky, goto the next stage
+		stage = oral & effort = workhard & luck = good: courses;
+
+		-- If Studied hard and is lucky, goto the next stage
+		stage = courses & effort = workhard & luck = good: research;
+
+		-- If just worked hard and two papers accepted, get the finished
+		stage = research & effort = workhard & papers = two: finished;
+
+		-- Otherwise stay in the same stage
+		TRUE: stage;
+	esac;
+
+
+
+
+
+TRANS stage = research & papers = none & effort = workhard -> next(papers) = one;
+
+TRANS stage = research & papers = one & effort = workhard -> next(papers) = two;
+
+
+
+
+-- The system allows some one to finish his research and get the certificate
+SPEC EF (stage = finished)
+
+-- The system can't allow the researcher to complete unless he publishes 2 papers
+SPEC AG (AG papers != two -> AG stage = finished)
+
