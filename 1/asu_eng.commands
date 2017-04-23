@@ -1,0 +1,61 @@
+!create computer : Department
+!create communic : Department
+
+!set computer.name := 'Computer and Systems'
+!set communic.name := 'Communications and Electronics'
+
+!create dr_cse1 : Doctor
+!create dr_cse2 : Doctor
+!create dr_comm : Doctor
+
+!set dr_cse1.name := 'Dr. CSE 1'
+!set dr_cse2.name := 'Dr. CSE 2'
+!set dr_comm.name := 'Dr. Communications'
+
+!set dr_cse1.birthdate := '1962-07-01'
+!set dr_cse2.birthdate := '1984-01-01'
+!set dr_comm.birthdate := '1976-11-24'
+
+!create ahm	: PostGradStudent
+!create moh : PostGradStudent
+!create ali	: PostGradStudent
+
+!set ahm.name := 'Ahmed'
+!set moh.name := 'Mohamed'
+!set ali.name := 'Ali'
+
+!set ahm.birthdate := '1985-03-01'
+!set moh.birthdate := '1987-07-28'
+-- violating dr_older_than_student rule. Ali is older than dr_cse2
+!set ali.birthdate := '1970-11-24'
+
+!create res_cse1 : Research
+!create res_cse2 : Research
+!create res_comm : Research
+
+!set res_cse1.title := 'CSE Research Title 1'
+!set res_cse2.title := 'CSE Research Title 2'
+!set res_comm.title := 'Commu Research Title'
+
+!insert (dr_cse1, computer) into worksAt
+!insert (dr_cse2, computer) into worksAt
+!insert (dr_comm, communic) into worksAt
+
+!insert (res_cse1, ahm) into doneBy
+!insert (res_cse2, moh) into doneBy
+!insert (res_comm, ali) into doneBy
+
+!insert (res_cse1,computer) into at
+!insert (res_cse2,computer) into at
+!insert (res_comm,communic) into at
+
+!insert (res_cse1, dr_cse1) into supervisedBy
+-- violating dr_loyality rule. dr_comm should have a research in communication department
+!insert (res_cse1, dr_comm) into supervisedBy
+
+!insert (res_cse2, dr_cse1) into supervisedBy
+!insert (res_cse2, dr_cse2) into supervisedBy
+
+!insert (res_comm, dr_cse1) into supervisedBy
+-- violating dr_from_dept rule. res_comm should have at least one doctor from communicsations department
+!insert (res_comm, dr_cse2) into supervisedBy
