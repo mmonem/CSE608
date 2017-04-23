@@ -49,8 +49,13 @@ next(papers) :=
 SPEC EF (stage = finished)
 
 -- The system can't allow the researcher to complete unless he publishes 2 papers
-SPEC AG (AG papers != two -> AG stage = finished)
+SPEC A [stage != finished U EF papers = two]
+SPEC AG (stage = finished -> papers = two)
 
--- Verify that the luck is not enough for a researcher to get his certificate
-SPEC !EF (effort = sleep & stage = finished)
+-- Verify that the luck is not enough for a researcher to get his certificate.
+-- Which means that the researcher who finished implies that he eventually worked hard
+-- or he already got the certificate
+SPEC AG(stage = finished -> AF(effort = workhard) | stage = finished)
+-- Another method like above
+SPEC A[stage != finished U EF effort = workhard]
 
